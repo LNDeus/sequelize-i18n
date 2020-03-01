@@ -116,7 +116,7 @@ class SequelizeI18N {
 
 	getFormatedAttributesInclusion (modelName) {
 		const model = this.sequelize.models[modelName];
-		const prop = `\`${model.name.plural}->${this.getI18NName(modelName)}\`.\`name\``;
+		const prop = `\`${model.options.name.plural}->${this.getI18NName(modelName)}\`.\`name\``;
 		const as = `\`${this.getI18NName(modelName)}\`.\`name\``;
 		
 		return [
