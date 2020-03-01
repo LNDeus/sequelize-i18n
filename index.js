@@ -114,13 +114,25 @@ class SequelizeI18N {
 		}
 	}
 
+	getFormatedAttributesInclusion (modelName) {
+		const model = this.sequelize.models[modelName];
+		const prop = `\`${model.name.plural}->${this.getI18NName(modelName)}\`.\`name\``;
+		const as = `\`${this.getI18NName(modelName)}\`.\`name\``;
+		
+		return [
+			sequelize.literal(prop, as)
+		]
+	}
+
 	// Add i18n in base model default scope
 	setDefaultScope(defaultScope, name) {
 		if (!name) return defaultScope;
 
 		const mutableDefaultScope = defaultScope;		
-		const defInclude= this.getFormattedInclude(name);
+		const defInclude = this.getFormattedInclude(name);
+		const attributesInclusion = this.getFormatedAttributesInclusion(name)
 
+		mutableDefaultScope.attributes = attributesInclusion;
 		mutableDefaultScope.include = this.toArray(mutableDefaultScope.include);		
 		mutableDefaultScope.include.push(defInclude);		
 
@@ -132,6 +144,10 @@ class SequelizeI18N {
 		const mutableScopes = scopes;	
 
 		Object.keys(mutableScopes).forEach((scope) => {
+			if (!Array.isArray(mutableScopes[scope].attributes)) {
+				mutableScopes[scope].attributes.include.push(this.getFormatedAttributesInclusion(name))
+			}
+			
 			mutableScopes[scope].include = this.toArray(mutableScopes[scope].include);
 			mutableScopes[scope].include.push(this.getFormattedInclude(name));
 		});
@@ -444,7 +460,7 @@ class SequelizeI18N {
 		}
 	}
 
-	beforeFind(options) {    
+	beforeFind(options) {
 		const mutableOptions = options;
 		const i18nModel = this.i18nModel;
 
@@ -491,7 +507,7 @@ class SequelizeI18N {
 					}, prop[0], prop[1]];
 				}
 			});
-		} 
+		}
 	}
 
 	getI18N(modelName) {
