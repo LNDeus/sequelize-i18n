@@ -55,7 +55,7 @@ class SequelizeI18N {
 		};
 
 		this.baseOptions =  _.assign({}, defaultOptions, options);	  
-		this.excludedAttributes = ["id", "parent_id"];  
+		this.excludedAttributes = ["id", "parent_id", "name", "created_at", "updated_at"];  
 		
 		if (!(
 				this.baseOptions.languages &&
