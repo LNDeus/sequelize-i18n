@@ -55,7 +55,7 @@ class SequelizeI18N {
 		};
 
 		this.baseOptions =  _.assign({}, defaultOptions, options);	  
-		this.excludedAttributes = ["id", "parent_id", "name", "created_at", "updated_at"];  
+		this.excludedAttributes = ["id", "parent_id"];  
 		
 		if (!(
 				this.baseOptions.languages &&
@@ -116,7 +116,7 @@ class SequelizeI18N {
 
 	getFormatedAttributesInclusion (modelName, originalModelName) {
 		const prop = `\`${originalModelName.plural}->${this.getI18NName(originalModelName.singular)}\`.\`name\``;
-		const as = `\`${this.getI18NName(originalModelName.singular)}\`.\`name\``;
+		const as = `\`${originalModelName.plural}\`.\`name\``;
 		
 		return [
 			this.sequelize.literal(prop, as)
