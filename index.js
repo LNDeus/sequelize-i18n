@@ -116,10 +116,9 @@ class SequelizeI18N {
 
 	getFormatedAttributesInclusion (modelName, originalModelName) {
 		const prop = `\`${originalModelName.plural}->${this.getI18NName(originalModelName.singular)}\`.\`name\``;
-		const as = `\`${originalModelName.plural}\`.\`name\``;
 		
 		return [
-			[this.sequelize.literal(prop), as]
+			[this.sequelize.literal(prop), 'name']
 		]
 	}
 
