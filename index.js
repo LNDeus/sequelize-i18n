@@ -144,10 +144,15 @@ class SequelizeI18N {
 		const mutableScopes = scopes;	
 
 		Object.keys(mutableScopes).forEach((scope) => {
-			if (!Array.isArray(mutableScopes[scope].attributes)) {
-				mutableScopes[scope].attributes.include.push(this.getFormatedAttributesInclusion(name))
+			if (!mutableScopes[scope].attributes) {
+				mutableScopes[scope].attributes = { include: [] };
 			}
-			
+
+			if (!mutableScopes[scope].attributes.include) {
+				mutableScopes[scope].attributes.include = [];
+			}
+
+			mutableScopes[scope].attributes.include = this.getFormatedAttributesInclusion(name);
 			mutableScopes[scope].include = this.toArray(mutableScopes[scope].include);
 			mutableScopes[scope].include.push(this.getFormattedInclude(name));
 		});
