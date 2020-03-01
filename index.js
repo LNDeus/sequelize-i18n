@@ -119,7 +119,7 @@ class SequelizeI18N {
 		const as = `\`${originalModelName.plural}\`.\`name\``;
 		
 		return [
-			this.sequelize.literal([prop, as])
+			[this.sequelize.literal(prop), as]
 		]
 	}
 
