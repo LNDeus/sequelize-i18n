@@ -120,7 +120,7 @@ class SequelizeI18N {
 		const as = `\`${this.getI18NName(modelName)}\`.\`name\``;
 		
 		return [
-			sequelize.literal(prop, as)
+			this.sequelize.literal(prop, as)
 		]
 	}
 
